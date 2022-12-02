@@ -17,7 +17,7 @@ class StaffMember extends React.Component {
         .then(res => {
             this.setState({
                 data: res.data,
-            }) ;
+            });
             
         });
 
