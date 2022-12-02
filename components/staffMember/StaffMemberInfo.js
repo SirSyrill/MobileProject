@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Button, Image, ScrollView, TextInput, StyleSheet } from 'react-native';
+import axios from 'axios';
 
 class StaffMemberInfo extends React.Component{
     constructor(props){
@@ -15,11 +16,42 @@ class StaffMemberInfo extends React.Component{
             zip: props.zip,
             country: props.country,
             isPressed: false,
-            showUpdate: true
+            showUpdate: true,
+        
+            UpdateName: '',
+            UpdatePhone: '',
+            UpdateDepartment: '',
+            UpdateStreet: '',
+            UpdateCity: '',
+            UpdateState: '',
+            UpdateZip: '',
+            UpdateCountry: '',
+            
         }
         
         this.showHide = this.showHide.bind(this)
         this.updateCancel = this.updateCancel.bind(this)
+        this.updateReq = this.updateReq.bind(this)
+    }
+
+    updateReq(){
+        axios.put('http://localhost:3000/update', {
+            id: this.state.id,
+            name: this.state.UpdateName,
+            phone: this.state.UpdatePhone,
+            department: this.state.UpdateDepartment,
+            street: this.state.UpdateStreet,
+            city: this.state.UpdateCity,
+            state: this.state.UpdateState,
+            zip: this.state.UpdateZip,
+            country: this.state.UpdateCountry,
+        })
+        .then(res => {
+            if(res.status == 200) {
+                alert('Member updated. changes will become visible next time you launch your app')
+            }
+        });
+
     }
 
     showHide(){
@@ -60,38 +92,38 @@ class StaffMemberInfo extends React.Component{
                         <View className='memberInfo' id={`memberInfo${this.state.id}`} style={this.state.isPressed ? styles.memberInfoSh : styles.memberInfoHi} >
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>NAME: {this.state.name}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdateName: e.target.value })}></input>
                             </View>
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>PHONE: {this.state.phone}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdatePhone: e.target.value })}></input>
                             </View>
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>DEPARTMENT: {this.state.department}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdateDepartment: e.target.value })}></input>
                             </View>
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>STREET: {this.state.street}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdateStreet: e.target.value })}></input>
                             </View>
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>CITY: {this.state.city}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdateCity: e.target.value })}></input>
                             </View>
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>STATE: {this.state.state}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdateState: e.target.value })}></input>
                             </View>
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>ZIP: {this.state.zip}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdateZip: e.target.value })}></input>
                             </View>
                             <View style={styles.updateField}>
                                 <Text style={styles.memberText}>COUNTRY: {this.state.country}</Text>
-                                <input style={styles.input}></input>
+                                <input style={styles.input} onChange={(e) => this.setState({ UpdateCountry: e.target.value })}></input>
                             </View>
                             <View style={styles.buttonView}>
-                                <button style={styles.button}>SUBMIT</button>
+                                <button style={styles.button} onClick={this.updateReq}>SUBMIT</button>
                                 <button style={styles.button} onClick={this.updateCancel}>CANCEL</button>
                             </View>
                         </View>

@@ -1,6 +1,5 @@
 import React, { cloneElement, useEffect } from 'react';
 import { View, Text, Image, ScrollView, TextInput, StyleSheet } from 'react-native';
-import getMembers from '../../api/getMembers';
 import StaffMemberInfo from './staffmemberInfo';
 import axios from 'axios';
 
@@ -16,7 +15,6 @@ class StaffMember extends React.Component {
     componentDidMount(){
         let res = axios.get('http://localhost:3000')
         .then(res => {
-            console.log(res)
             this.setState({
                 data: res.data,
             }) ;
